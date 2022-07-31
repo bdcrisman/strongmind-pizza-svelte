@@ -11,10 +11,6 @@
 
     let err = "";
 
-    function displayAvailableToppings(toppings) {
-        return toppings.join(", ");
-    }
-
     function createNewPizza() {
         isCreatePizza = true;
     }
@@ -22,48 +18,32 @@
     function addPizza() {
         if (!isValidPizza(pizza)) return;
 
-        // const isAllowed = pizzas.every((p) => {
-        //     const matches = p.toppings.filter((t) =>
-        //         pizza.toppings.includes(t)
-        //     );
-        //     console.log(matches);
-
-        //     if (matches.length > 0) return false;
-        //     return true;
-        // });
-
-        // if (!isAllowed) {
-        //     err = "Pizza cannot have exact same toppings as another pizza";
-        //     return;
-        // }
-
-        // err = "";
         isCreatePizza = false;
         pizzas.push(pizza);
         pizzas = pizzas;
-
         pizza = undefined;
     }
 
     function removePizza() {
-        pizzas = pizzas.filter((x) => {
-            console.log(x);
-            !selection.includes(x.name);
-        });
+        pizzas = pizzas.filter((p) => p.name != selection[0]);
     }
 
     function isValidPizza(pizza) {
         err = "";
+
+        // check for null or no name pizza
         if (pizza === undefined || pizza.name === "") {
             err = "Please name your pizza";
             return false;
         }
 
+        // check for same named pizza
         if (pizzas.find((p) => p.name === pizza.name)) {
             err = "Cannot have duplicate pizza name";
             return false;
         }
 
+        // check for same toppings
         let areSameToppings = false;
         for (let i = 0; i < pizzas.length; i++) {
             const p = pizzas[i];
