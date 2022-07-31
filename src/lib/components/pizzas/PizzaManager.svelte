@@ -20,7 +20,6 @@
     }
 
     function addPizza() {
-        console.log("add pizza");
         if (pizza === undefined || pizza.name === "") {
             err = "Please name your pizza";
             return;
@@ -34,7 +33,12 @@
         pizza = undefined;
     }
 
-    function removePizza() {}
+    function removePizza() {
+        pizzas = pizzas.filter((x) => {
+            console.log(x);
+            !selection.includes(x.name);
+        });
+    }
 
     function updatePizza() {}
 </script>
