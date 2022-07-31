@@ -52,6 +52,7 @@
 
 <h2>Toppings</h2>
 <p class="error">{err}</p>
+
 <div>
     <input type="text" bind:value={inputTopping} placeholder="new topping..." />
 </div>
