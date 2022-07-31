@@ -50,7 +50,7 @@
             if (p.toppings.length !== pizza.toppings.length) continue;
 
             const p1 = p.toppings.concat().sort();
-            const p2 = p.toppings.concat().sort();
+            const p2 = pizza.toppings.concat().sort();
 
             for (let j = 0; j < p1.length; j++) {
                 if (p1[j] !== p2[j]) continue;
