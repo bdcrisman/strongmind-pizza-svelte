@@ -3,6 +3,7 @@
     import "./styles.css";
 
     export let availableToppings = ["sauce", "cheese"];
+    export let isReady = false;
 
     let selection = [];
     let inputTopping;
@@ -44,6 +45,10 @@
             }
         }
     }
+
+    function setIsReady() {
+        isReady = true;
+    }
 </script>
 
 <h2>Toppings</h2>
@@ -61,3 +66,7 @@
     <button on:click={removeTopping}>Remove Topping</button>
     <button on:click={updateTopping}>Update Topping</button>
 </div>
+
+{#if !isReady}
+    {setIsReady()}
+{/if}

@@ -1,38 +1,52 @@
 <script>
     import Topping from "../toppings/Topping.svelte";
+    import NewPizza from "./NewPizza.svelte";
+    import Pizza from "./Pizza.svelte";
     import "./styles.css";
 
     export let availableToppings = undefined;
+    let pizzas = [];
     let isCreatePizza = false;
-    let newPizzaName = undefined;
-    let selection = [];
-    let newToppings = [];
+    let pizza = undefined;
+    let err = "";
 
-    function displayAvailableToppings() {
-        return availableToppings ? availableToppings.join(", ") : "";
+    function displayAvailableToppings(toppings) {
+        return toppings.join(", ");
     }
 
     function createNewPizza() {
         isCreatePizza = true;
     }
-    function addPizza() {}
-    function removePizza() {}
-    function updatePizza() {}
-    function addTopping() {
-        if (!isCreatePizza) {
+
+    function addPizza() {
+        if (pizza === undefined || pizza.name === "") {
+            err = "Pizza needs a name";
             return;
         }
+
+        err = "";
+        isCreatePizza = false;
+        pizzas.push(pizza);
+        pizzas = pizzas;
     }
-    function removeTopping() {}
+
+    function removePizza() {}
+
+    function updatePizza() {}
 </script>
 
 <h2>Pizzas</h2>
-<div>{displayAvailableToppings()}</div>
+
+{#if pizzas !== undefined}
+    {#each pizzas as pizza}
+        {pizza.name}
+    {/each}
+{/if}
+
+<p class="error">{err}</p>
+
 <div class="buttons">
     <button on:click={createNewPizza}>Create New Pizza</button>
-    <button on:click={addTopping}>Add Topping</button>
-    <button on:click={removeTopping}>Remove Topping</button>
-    <button on:click={addPizza}>Add Pizza</button>
     <button on:click={removePizza}>Remove Pizza</button>
     <button on:click={updatePizza}>Update Pizza</button>
 </div>
@@ -40,17 +54,10 @@
 <hr />
 
 {#if isCreatePizza}
-    <div class="new-pizza-section">
-        <h3>Create New Pizza!</h3>
-        <input
-            type="text"
-            bind:value={newPizzaName}
-            placeholder="new pizza name..."
-        />
-        {#each availableToppings as topping}
-            <Topping value={topping} bind:group={selection} />
-        {/each}
-
-        <h4>Selected Toppings</h4>
-    </div>
+    <NewPizza
+        bind:availableToppings
+        bind:pizza
+        on:addPizza={addPizza}
+        bind:err
+    />
 {/if}
