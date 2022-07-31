@@ -37,6 +37,11 @@
             return false;
         }
 
+        if (pizza.toppings.length === 0) {
+            err = "Pizza must have toppings";
+            return false;
+        }
+
         // check for same named pizza
         if (pizzas.find((p) => p.name === pizza.name)) {
             err = "Cannot have duplicate pizza name";
