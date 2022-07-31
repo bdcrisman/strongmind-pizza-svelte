@@ -27,7 +27,6 @@
     }
 
     function removeTopping() {
-        console.log(selection);
         availableToppings = availableToppings.filter(
             (x) => !selection.includes(x)
         );
@@ -35,8 +34,8 @@
 
     function updateTopping() {
         if (selection.length === 0) return;
+
         const item = selection[0];
-        let topping;
         for (let i = 0; i < availableToppings.length; i++) {
             if (item === availableToppings[i]) {
                 console.log(availableToppings[i], inputTopping);
