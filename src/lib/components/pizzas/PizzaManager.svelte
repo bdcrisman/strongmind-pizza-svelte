@@ -1,13 +1,14 @@
 <script>
-    import Topping from "../toppings/Topping.svelte";
     import NewPizza from "./NewPizza.svelte";
     import Pizza from "./Pizza.svelte";
     import "./styles.css";
 
     export let availableToppings = undefined;
+    let selection = [];
     let pizzas = [];
-    let isCreatePizza = false;
     let pizza = undefined;
+    let isCreatePizza = false;
+
     let err = "";
 
     function displayAvailableToppings(toppings) {
@@ -19,8 +20,9 @@
     }
 
     function addPizza() {
+        console.log("add pizza");
         if (pizza === undefined || pizza.name === "") {
-            err = "Pizza needs a name";
+            err = "Please name your pizza";
             return;
         }
 
@@ -28,6 +30,8 @@
         isCreatePizza = false;
         pizzas.push(pizza);
         pizzas = pizzas;
+
+        pizza = undefined;
     }
 
     function removePizza() {}
@@ -39,7 +43,11 @@
 
 {#if pizzas !== undefined}
     {#each pizzas as pizza}
-        {pizza.name}
+        <Pizza
+            bind:value={pizza.name}
+            bind:toppings={pizza.toppings}
+            bind:group={selection}
+        />
     {/each}
 {/if}
 
