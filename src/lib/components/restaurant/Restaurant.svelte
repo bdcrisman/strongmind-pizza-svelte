@@ -12,4 +12,4 @@
 <ToppingsManager bind:availableToppings={toppings} />
 <hr />
 
-<PizzaManager bind:availableToppings={toppings} />
+<PizzaManager availableToppings={toppings} />
