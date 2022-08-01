@@ -1,4 +1,5 @@
 <script>
+    export let id = -1;
     export let value = undefined;
     export let toppings = [];
     export let group = undefined;

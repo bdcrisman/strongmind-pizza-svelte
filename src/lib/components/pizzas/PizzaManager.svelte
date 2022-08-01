@@ -1,5 +1,5 @@
 <script>
-    import NewPizza from "./NewPizza.svelte";
+    import NewPizza from "./NewUpdatePizza.svelte";
     import Pizza from "./Pizza.svelte";
     import "./styles.css";
 
@@ -13,6 +13,8 @@
     let err = "";
 
     function createNewPizza() {
+        pizza = undefined;
+        isUpdatePizza = false;
         isCreatePizza = true;
     }
 
@@ -20,6 +22,7 @@
         if (!isValidPizza(pizza)) return;
 
         isCreatePizza = false;
+        pizza.id = pizzas.length;
         pizzas.push(pizza);
         pizzas = pizzas;
         pizza = undefined;
@@ -27,6 +30,23 @@
 
     function removePizza() {
         pizzas = pizzas.filter((p) => p.name != selection[0]);
+    }
+
+    function updatePizza() {
+        const result = pizzas.filter((p) => p.name === selection[0]);
+        if (result.length === 0) return;
+
+        pizza = result[0];
+        isCreatePizza = false;
+        isUpdatePizza = true;
+    }
+
+    function updateSelectedPizza() {
+        if (!isValidPizza(pizza)) return;
+
+        isUpdatePizza = false;
+        const id = pizzas.indexOf((p) => (p.id = pizza.id));
+        console.log(id);
     }
 
     function isValidPizza(pizza) {
@@ -71,8 +91,6 @@
         }
         return !areSameToppings;
     }
-
-    function updatePizza() {}
 </script>
 
 <h2>Pizzas</h2>
@@ -80,6 +98,7 @@
 {#if pizzas !== undefined}
     {#each pizzas as pizza}
         <Pizza
+            id={pizza.id}
             bind:value={pizza.name}
             bind:toppings={pizza.toppings}
             bind:group={selection}
@@ -92,7 +111,10 @@
 <div class="buttons">
     <button on:click={createNewPizza}>Create New Pizza</button>
     <button on:click={removePizza}>Remove Pizza</button>
-    <button on:click={updatePizza}>Update Pizza</button>
+
+    {#if pizzas.length > 0 && selection.length > 0}
+        <button on:click={updatePizza}>Update Pizza</button>
+    {/if}
 </div>
 
 <hr />
@@ -103,5 +125,13 @@
         bind:pizza
         on:addPizza={addPizza}
         bind:err
+    />
+{:else if isUpdatePizza}
+    <NewPizza
+        bind:availableToppings
+        bind:pizza
+        on:updatePizza={updateSelectedPizza}
+        bind:err
+        isUpdatePizza={true}
     />
 {/if}

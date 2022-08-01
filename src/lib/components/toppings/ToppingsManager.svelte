@@ -64,7 +64,10 @@
 <div class="buttons">
     <button on:click={addTopping}>Add Topping</button>
     <button on:click={removeTopping}>Remove Topping</button>
-    <button on:click={updateTopping}>Update Topping</button>
+
+    {#if availableToppings.length > 0}
+        <button on:click={updateTopping}>Update Topping</button>
+    {/if}
 </div>
 
 {#if !isReady}

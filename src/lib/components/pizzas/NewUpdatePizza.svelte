@@ -4,8 +4,10 @@
     import "./styles.css";
 
     export let err = "";
+    export let isUpdatePizza = false;
     export let availableToppings = undefined;
     export let pizza = {
+        id: -1,
         name: "",
         toppings: [],
     };
@@ -37,9 +39,10 @@
     }
 
     const addPizza = () => dispatch("addPizza");
+    const updatePizza = () => dispatch("updatePizza");
 </script>
 
-<h3>Create New Pizza!</h3>
+<h3>{isUpdatePizza ? `Update ${pizza.name}` : "Create New Pizza!"}</h3>
 <input type="text" bind:value={pizza.name} placeholder="new pizza name..." />
 
 <div>
@@ -65,5 +68,9 @@
 <p class="error">{err}</p>
 
 <div>
-    <button on:click={addPizza} class="add-pizza-btn">Add Pizza</button>
+    <button
+        on:click={isUpdatePizza ? updatePizza : addPizza}
+        class="add-update-pizza-btn"
+        >{isUpdatePizza ? "Update Pizza" : "Add Pizza"}</button
+    >
 </div>
