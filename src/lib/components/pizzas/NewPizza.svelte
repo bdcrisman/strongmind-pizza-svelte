@@ -22,7 +22,7 @@
     function addTopping() {
         if (selection.length === 0) return;
 
-        const topping = selection[0];
+        const topping = availableToppings.find((x) => x.name === selection[0]);
         if (pizza.toppings.includes(topping)) {
             err = "Cannot have duplicated toppings";
             return;
@@ -47,7 +47,6 @@
     }
 
     const addPizza = () => dispatch("addPizza");
-    const updatePizza = () => dispatch("updatePizza");
 </script>
 
 <h3>{"Create New Pizza!"}</h3>
@@ -58,7 +57,7 @@
     <p>Select from the available toppings...</p>
     <p class="error">{err}</p>
     {#each availableToppings as topping}
-        <Topping value={topping} bind:group={selection} />
+        <Topping value={topping.name} bind:group={selection} />
     {/each}
 </div>
 
@@ -70,7 +69,7 @@
 <h4>Selected Toppings</h4>
 {#each pizza.toppings as t}
     <ul>
-        <li>{t}</li>
+        <li>{t.name}</li>
     </ul>
 {/each}
 

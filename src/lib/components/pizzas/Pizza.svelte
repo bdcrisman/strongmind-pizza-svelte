@@ -10,7 +10,7 @@
         <input type="checkbox" bind:group {value} class="pizza-input" />
         <span class="pizza-name">{value + ": "}</span>
         {#each toppings as topping}
-            {topping + ", "}
+            {topping.name + ", "}
         {/each}
     </label>
 </div>
