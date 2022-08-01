@@ -1,6 +1,5 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import Pizza from "./Pizza.svelte";
     import Topping from "../toppings/Topping.svelte";
     import "./styles.css";
 
@@ -66,5 +65,5 @@
 <p class="error">{err}</p>
 
 <div>
-    <button on:click={addPizza}>Add Pizza</button>
+    <button on:click={addPizza} class="add-pizza-btn">Add Pizza</button>
 </div>
