@@ -9,12 +9,13 @@
     let err = "";
 
     function addTopping() {
+        if (inputTopping === undefined || inputTopping === "") return;
+
         for (let i = 0; i < availableToppings.length; i++) {
             if (
                 availableToppings[i].toLowerCase() ===
                 inputTopping.toLowerCase()
             ) {
-                console.log("Cannot have duplicate toppings");
                 err = "Cannot have duplicate toppings";
                 return;
             }
@@ -26,6 +27,8 @@
     }
 
     function removeTopping() {
+        if (selection.length === 0) return;
+
         availableToppings = availableToppings.filter(
             (x) => !selection.includes(x)
         );
@@ -33,6 +36,7 @@
 
     function updateTopping() {
         if (selection.length === 0) return;
+        if (inputTopping === undefined || inputTopping === "") return;
 
         const item = selection[0];
         for (let i = 0; i < availableToppings.length; i++) {
