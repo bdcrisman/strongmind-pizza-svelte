@@ -15,9 +15,12 @@
     const dispatch = createEventDispatcher();
     let selection = [];
     let isDirty = false;
+    let isInit = true;
 
     function addTopping() {
         if (selection.length === 0) return;
+
+        initialize();
 
         const topping = selection[0];
         if (existingPizza.toppings.includes(topping)) {
@@ -33,14 +36,22 @@
 
     function removeTopping() {
         if (selection.length === 0) return;
-        const topping = selection[0];
 
+        initialize();
+
+        const topping = selection[0];
         if (!existingPizza.toppings.includes(topping)) return;
         updatedPizza.toppings = existingPizza.toppings.filter(
             (x) => x !== topping
         );
 
         isDirty = true;
+    }
+
+    function initialize() {
+        if (!isInit) return;
+        isInit = false;
+        updatedPizza = existingPizza;
     }
 
     const updatePizza = () => {
@@ -61,6 +72,7 @@
 
 <h3>Update Pizza</h3>
 
+<div>Current name: {existingPizza.name}</div>
 <input
     type="text"
     bind:value={updatedPizza.name}
@@ -81,11 +93,19 @@
 </div>
 
 <h4>Selected Toppings</h4>
-{#each updatedPizza.toppings as t}
-    <ul>
-        <li>{t}</li>
-    </ul>
-{/each}
+{#if isInit}
+    {#each existingPizza.toppings as t}
+        <ul>
+            <li>{t}</li>
+        </ul>
+    {/each}
+{:else}
+    {#each updatedPizza.toppings as t}
+        <ul>
+            <li>{t}</li>
+        </ul>
+    {/each}
+{/if}
 
 <p class="error">{err}</p>
 
