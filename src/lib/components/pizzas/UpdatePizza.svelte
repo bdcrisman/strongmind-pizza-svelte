@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import Topping from "../toppings/Topping.svelte";
     import "./styles.css";
 
@@ -19,7 +19,7 @@
     function addTopping() {
         if (selection.length === 0) return;
 
-        const topping = selection[0];
+        const topping = availableToppings.find((x) => x.name === selection[0]);
         if (existingPizza.toppings.includes(topping)) {
             err = "Cannot have duplicated toppings";
             return;
@@ -43,9 +43,7 @@
         isDirty = true;
     }
 
-    const initialize = () => (updatedPizza = existingPizza);
-
-    const updatePizza = () => {
+    function updatePizza() {
         updatedPizza.id = existingPizza.id;
 
         if (updatedPizza.name === undefined || updatedPizza.name === "") {
@@ -58,10 +56,15 @@
 
         updatedPizza = updatedPizza;
         dispatch("updatePizza");
-    };
+    }
 
-    // initialize the updated pizza with existing values
-    initialize();
+    function init() {
+        updatedPizza = existingPizza;
+    }
+
+    onMount(async () => {
+        init();
+    });
 </script>
 
 <h3>Update Pizza</h3>
@@ -90,7 +93,7 @@
 
 {#each updatedPizza.toppings as t}
     <ul>
-        <li>{t}</li>
+        <li>{t.name}</li>
     </ul>
 {/each}
 

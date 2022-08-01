@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import Topping from "./Topping.svelte";
     import "./styles.css";
 
@@ -62,7 +63,9 @@
         }
     }
 
-    init();
+    onMount(async () => {
+        init();
+    });
 </script>
 
 <h2>Toppings</h2>

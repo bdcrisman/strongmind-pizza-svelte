@@ -11,7 +11,6 @@
     let updatedPizza = undefined;
     let isCreatePizza = false;
     let isUpdatePizza = false;
-
     let err = "";
 
     function createNewPizza() {
