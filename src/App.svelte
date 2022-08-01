@@ -1,8 +1,8 @@
 <script>
-    import Store from "./lib/components/store/Store.svelte";
+    import Restaurant from "./lib/components/restaurant/Restaurant.svelte";
     import "./app.css";
 </script>
 
 <main>
-    <Store />
+    <Restaurant />
 </main>

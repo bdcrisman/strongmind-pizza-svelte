@@ -1,5 +1,6 @@
 <script>
-    import NewPizza from "./NewUpdatePizza.svelte";
+    import NewPizza from "./NewPizza.svelte";
+    import UpdatePizza from "./UpdatePizza.svelte";
     import Pizza from "./Pizza.svelte";
     import "./styles.css";
 
@@ -7,6 +8,7 @@
     let selection = [];
     let pizzas = [];
     let pizza = undefined;
+    let updatedPizza = undefined;
     let isCreatePizza = false;
     let isUpdatePizza = false;
 
@@ -19,7 +21,7 @@
     }
 
     function addPizza() {
-        if (!isValidPizza(pizza)) return;
+        if (!isValidPizza(pizza, false)) return;
 
         isCreatePizza = false;
         pizza.id = pizzas.length;
@@ -42,65 +44,75 @@
     }
 
     function updateSelectedPizza() {
-        if (!isValidPizza(pizza)) return;
+        if (!isValidPizza(updatedPizza, true)) return;
 
+        pizzas[updatedPizza.id] = updatedPizza;
         isUpdatePizza = false;
-        const id = pizzas.indexOf((p) => (p.id = pizza.id));
-        console.log(id);
     }
 
-    function isValidPizza(pizza) {
+    function isValidPizza(inPizza, isUpdate) {
         err = "";
 
         // check for null or no name pizza
-        if (pizza === undefined || pizza.name === "") {
+        if (inPizza === undefined || inPizza.name === "") {
             err = "Please name your pizza";
             return false;
         }
 
-        if (pizza.toppings.length === 0) {
+        // do we have any toppings?
+        if (inPizza.toppings.length === 0) {
             err = "Pizza must have toppings";
             return false;
         }
 
-        // check for same named pizza
-        if (pizzas.find((p) => p.name === pizza.name)) {
+        // don't care about having the same name or toppings
+        // can update anyway
+        if (isUpdate) return true;
+
+        // check for same named pizzas
+        if (pizzas.find((p) => p.name === inPizza.name)) {
             err = "Cannot have duplicate pizza name";
             return false;
         }
 
         // check for same toppings
-        let areSameToppings = false;
+        let haveSameToppings = isPizzaToppingsSame(inPizza);
+        return !haveSameToppings;
+    }
+
+    function isPizzaToppingsSame(inPizza) {
+        let haveSameToppings = false;
+
         for (let i = 0; i < pizzas.length; i++) {
             const p = pizzas[i];
-            if (p.toppings.length !== pizza.toppings.length) continue;
+            if (p.toppings.length !== inPizza.toppings.length) continue;
 
             const p1 = p.toppings.concat().sort();
-            const p2 = pizza.toppings.concat().sort();
+            const p2 = inPizza.toppings.concat().sort();
 
             for (let j = 0; j < p1.length; j++) {
                 if (p1[j] !== p2[j]) continue;
-                areSameToppings = true;
+                haveSameToppings = true;
                 break;
             }
 
-            if (areSameToppings) {
+            if (haveSameToppings) {
                 err = "Pizza cannot have exact same toppings as another pizza";
                 break;
             }
         }
-        return !areSameToppings;
+        return haveSameToppings;
     }
 </script>
 
 <h2>Pizzas</h2>
 
 {#if pizzas !== undefined}
-    {#each pizzas as pizza}
+    {#each pizzas as p}
         <Pizza
-            id={pizza.id}
-            bind:value={pizza.name}
-            bind:toppings={pizza.toppings}
+            id={p.id}
+            bind:value={p.name}
+            bind:toppings={p.toppings}
             bind:group={selection}
         />
     {/each}
@@ -127,11 +139,11 @@
         bind:err
     />
 {:else if isUpdatePizza}
-    <NewPizza
+    <UpdatePizza
         bind:availableToppings
-        bind:pizza
+        bind:updatedPizza
         on:updatePizza={updateSelectedPizza}
         bind:err
-        isUpdatePizza={true}
+        existingPizza={pizza}
     />
 {/if}

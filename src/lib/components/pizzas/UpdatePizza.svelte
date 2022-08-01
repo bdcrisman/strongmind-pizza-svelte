@@ -4,9 +4,9 @@
     import "./styles.css";
 
     export let err = "";
-    export let isUpdatePizza = false;
     export let availableToppings = undefined;
-    export let pizza = {
+    export let existingPizza = undefined;
+    export let updatedPizza = {
         id: -1,
         name: "",
         toppings: [],
@@ -14,36 +14,58 @@
 
     const dispatch = createEventDispatcher();
     let selection = [];
+    let isDirty = false;
 
     function addTopping() {
         if (selection.length === 0) return;
 
         const topping = selection[0];
-        if (pizza.toppings.includes(topping)) {
+        if (existingPizza.toppings.includes(topping)) {
             err = "Cannot have duplicated toppings";
             return;
         }
 
         err = "";
-        pizza.toppings.push(topping);
-        pizza.toppings = pizza.toppings;
+        updatedPizza.toppings.push(topping);
+        // updatedPizza.toppings = existingPizza.toppings;
+        isDirty = true;
     }
 
     function removeTopping() {
         if (selection.length === 0) return;
-
         const topping = selection[0];
-        if (!pizza.toppings.includes(topping)) return;
 
-        pizza.toppings = pizza.toppings.filter((x) => x !== topping);
+        if (!existingPizza.toppings.includes(topping)) return;
+        updatedPizza.toppings = existingPizza.toppings.filter(
+            (x) => x !== topping
+        );
+
+        isDirty = true;
     }
 
-    const addPizza = () => dispatch("addPizza");
-    const updatePizza = () => dispatch("updatePizza");
+    const updatePizza = () => {
+        updatedPizza.id = existingPizza.id;
+
+        if (updatedPizza.name === undefined || updatedPizza.name === "") {
+            updatedPizza.name = existingPizza.name;
+        }
+
+        if (!isDirty) {
+            updatedPizza.toppings = existingPizza.toppings;
+        }
+
+        updatedPizza = updatedPizza;
+        dispatch("updatePizza");
+    };
 </script>
 
-<h3>{isUpdatePizza ? `Update ${pizza.name}` : "Create New Pizza!"}</h3>
-<input type="text" bind:value={pizza.name} placeholder="new pizza name..." />
+<h3>Update Pizza</h3>
+
+<input
+    type="text"
+    bind:value={updatedPizza.name}
+    placeholder="update pizza name..."
+/>
 
 <div>
     <p>Select from the available toppings...</p>
@@ -59,7 +81,7 @@
 </div>
 
 <h4>Selected Toppings</h4>
-{#each pizza.toppings as t}
+{#each updatedPizza.toppings as t}
     <ul>
         <li>{t}</li>
     </ul>
@@ -68,9 +90,7 @@
 <p class="error">{err}</p>
 
 <div>
-    <button
-        on:click={isUpdatePizza ? updatePizza : addPizza}
-        class="add-update-pizza-btn"
-        >{isUpdatePizza ? "Update Pizza" : "Add Pizza"}</button
+    <button on:click={updatePizza} class="add-update-pizza-btn"
+        >{"Update Pizza"}</button
     >
 </div>
