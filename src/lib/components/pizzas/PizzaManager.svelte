@@ -50,10 +50,6 @@
         isUpdatePizza = false;
     }
 
-    function cancelUpdatePizza() {
-        isUpdatePizza = false;
-    }
-
     function isValidPizza(inPizza, isUpdate) {
         err = "";
 
@@ -129,7 +125,7 @@
     <button on:click={removePizza}>Remove Pizza</button>
 
     {#if pizzas.length > 0 && selection.length > 0}
-        <button on:click={updatePizza}>Update Pizza</button>
+        <button on:click={updatePizza}>Edit Pizza</button>
     {/if}
 </div>
 
@@ -147,7 +143,6 @@
         bind:availableToppings
         bind:updatedPizza
         on:updatePizza={updateSelectedPizza}
-        on:cancelUpdate={cancelUpdatePizza}
         bind:err
         existingPizza={pizza}
     />

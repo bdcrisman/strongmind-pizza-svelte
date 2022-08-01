@@ -43,9 +43,7 @@
         isDirty = true;
     }
 
-    function initialize() {
-        updatedPizza = existingPizza;
-    }
+    const initialize = () => (updatedPizza = existingPizza);
 
     const updatePizza = () => {
         updatedPizza.id = existingPizza.id;
@@ -60,11 +58,6 @@
 
         updatedPizza = updatedPizza;
         dispatch("updatePizza");
-    };
-
-    const cancelUpdate = () => {
-        // updatedPizza = undefined;
-        dispatch("cancelUpdate");
     };
 
     // initialize the updated pizza with existing values
@@ -107,5 +100,4 @@
     <button on:click={updatePizza} class="add-update-pizza-btn"
         >Update Pizza</button
     >
-    <button on:click={cancelUpdate} class="add-update-pizza-btn">Cancel</button>
 </div>
