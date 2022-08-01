@@ -2,7 +2,7 @@
     import Topping from "./Topping.svelte";
     import "./styles.css";
 
-    export let availableToppings = ["sauce", "cheese"];
+    export let availableToppings = ["Marinara Sauce", "Cheese"];
     export let isReady = false;
 
     let selection = [];
