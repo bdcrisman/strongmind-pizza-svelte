@@ -3,7 +3,6 @@
     import Topping from "../toppings/Topping.svelte";
     import "./styles.css";
 
-    export let err = "";
     export let availableToppings = undefined;
     export let existingPizza = undefined;
     export let updatedPizza = {
@@ -12,9 +11,11 @@
         toppings: [],
     };
 
-    const dispatch = createEventDispatcher();
     let selection = [];
     let isDirty = false;
+    let err = "";
+
+    const dispatch = createEventDispatcher();
 
     function addTopping() {
         if (selection.length === 0) return;
@@ -34,7 +35,7 @@
     function removeTopping() {
         if (selection.length === 0) return;
 
-        const topping = selection[0];
+        const topping = availableToppings.find((x) => x.name === selection[0]);
         if (!existingPizza.toppings.includes(topping)) return;
         updatedPizza.toppings = existingPizza.toppings.filter(
             (x) => x !== topping
