@@ -15,12 +15,9 @@
     const dispatch = createEventDispatcher();
     let selection = [];
     let isDirty = false;
-    let isInit = true;
 
     function addTopping() {
         if (selection.length === 0) return;
-
-        initialize();
 
         const topping = selection[0];
         if (existingPizza.toppings.includes(topping)) {
@@ -30,14 +27,12 @@
 
         err = "";
         updatedPizza.toppings.push(topping);
-        // updatedPizza.toppings = existingPizza.toppings;
+        updatedPizza.toppings = updatedPizza.toppings;
         isDirty = true;
     }
 
     function removeTopping() {
         if (selection.length === 0) return;
-
-        initialize();
 
         const topping = selection[0];
         if (!existingPizza.toppings.includes(topping)) return;
@@ -49,8 +44,6 @@
     }
 
     function initialize() {
-        if (!isInit) return;
-        isInit = false;
         updatedPizza = existingPizza;
     }
 
@@ -68,6 +61,14 @@
         updatedPizza = updatedPizza;
         dispatch("updatePizza");
     };
+
+    const cancelUpdate = () => {
+        // updatedPizza = undefined;
+        dispatch("cancelUpdate");
+    };
+
+    // initialize the updated pizza with existing values
+    initialize();
 </script>
 
 <h3>Update Pizza</h3>
@@ -93,24 +94,18 @@
 </div>
 
 <h4>Selected Toppings</h4>
-{#if isInit}
-    {#each existingPizza.toppings as t}
-        <ul>
-            <li>{t}</li>
-        </ul>
-    {/each}
-{:else}
-    {#each updatedPizza.toppings as t}
-        <ul>
-            <li>{t}</li>
-        </ul>
-    {/each}
-{/if}
+
+{#each updatedPizza.toppings as t}
+    <ul>
+        <li>{t}</li>
+    </ul>
+{/each}
 
 <p class="error">{err}</p>
 
 <div>
     <button on:click={updatePizza} class="add-update-pizza-btn"
-        >{"Update Pizza"}</button
+        >Update Pizza</button
     >
+    <button on:click={cancelUpdate} class="add-update-pizza-btn">Cancel</button>
 </div>

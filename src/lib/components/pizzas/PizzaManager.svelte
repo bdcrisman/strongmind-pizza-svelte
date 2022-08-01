@@ -50,6 +50,10 @@
         isUpdatePizza = false;
     }
 
+    function cancelUpdatePizza() {
+        isUpdatePizza = false;
+    }
+
     function isValidPizza(inPizza, isUpdate) {
         err = "";
 
@@ -143,6 +147,7 @@
         bind:availableToppings
         bind:updatedPizza
         on:updatePizza={updateSelectedPizza}
+        on:cancelUpdate={cancelUpdatePizza}
         bind:err
         existingPizza={pizza}
     />

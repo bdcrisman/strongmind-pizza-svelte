@@ -45,9 +45,7 @@
         }
     }
 
-    function setIsReady() {
-        isReady = true;
-    }
+    isReady = true;
 </script>
 
 <h2>Toppings</h2>
@@ -69,7 +67,3 @@
         <button on:click={updateTopping}>Update Topping</button>
     {/if}
 </div>
-
-{#if !isReady}
-    {setIsReady()}
-{/if}
