@@ -3,7 +3,6 @@
     import "./styles.css";
 
     export let availableToppings = ["Marinara Sauce", "Cheese"];
-    export let isReady = false;
 
     let selection = [];
     let inputTopping;
@@ -44,10 +43,6 @@
             }
         }
     }
-
-    function setIsReady() {
-        isReady = true;
-    }
 </script>
 
 <h2>Toppings</h2>
@@ -64,9 +59,8 @@
 <div class="buttons">
     <button on:click={addTopping}>Add Topping</button>
     <button on:click={removeTopping}>Remove Topping</button>
-    <button on:click={updateTopping}>Update Topping</button>
-</div>
 
-{#if !isReady}
-    {setIsReady()}
-{/if}
+    {#if availableToppings.length > 0 && selection.length > 0}
+        <button on:click={updateTopping}>Edit Topping</button>
+    {/if}
+</div>

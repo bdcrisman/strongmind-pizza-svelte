@@ -6,6 +6,12 @@
     export let err = "";
     export let availableToppings = undefined;
     export let pizza = {
+        id: -1,
+        name: "",
+        toppings: [],
+    };
+
+    export let updated = {
         name: "",
         toppings: [],
     };
@@ -31,15 +37,21 @@
         if (selection.length === 0) return;
 
         const topping = selection[0];
-        if (!pizza.toppings.includes(topping)) return;
 
+        if (!pizza.toppings.includes(topping)) return;
         pizza.toppings = pizza.toppings.filter((x) => x !== topping);
     }
 
+    function setUpdatedToExisting() {
+        updated = pizza;
+    }
+
     const addPizza = () => dispatch("addPizza");
+    const updatePizza = () => dispatch("updatePizza");
 </script>
 
-<h3>Create New Pizza!</h3>
+<h3>{"Create New Pizza!"}</h3>
+
 <input type="text" bind:value={pizza.name} placeholder="new pizza name..." />
 
 <div>
@@ -65,5 +77,7 @@
 <p class="error">{err}</p>
 
 <div>
-    <button on:click={addPizza} class="add-pizza-btn">Add Pizza</button>
+    <button on:click={addPizza} class="add-update-pizza-btn"
+        >{"Add Pizza"}</button
+    >
 </div>
