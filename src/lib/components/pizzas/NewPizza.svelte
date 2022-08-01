@@ -58,7 +58,7 @@
     <p>Select from the available toppings...</p>
     <p class="error">{err}</p>
     {#each availableToppings as topping}
-        <Topping value={topping} bind:group={selection} />
+        <Topping value={topping.name} bind:group={selection} />
     {/each}
 </div>
 

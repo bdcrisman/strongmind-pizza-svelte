@@ -2,10 +2,12 @@
     import Topping from "./Topping.svelte";
     import "./styles.css";
 
-    export let availableToppings = ["Marinara Sauce", "Cheese"];
+    const defaultToppingNames = ["Marinara Sauce", "Cheese"];
 
+    export let availableToppings = [];
     let selection = [];
     let inputTopping;
+    let topping = undefined;
     let err = "";
 
     function addTopping() {
@@ -13,7 +15,7 @@
 
         for (let i = 0; i < availableToppings.length; i++) {
             if (
-                availableToppings[i].toLowerCase() ===
+                availableToppings[i].name.toLowerCase() ===
                 inputTopping.toLowerCase()
             ) {
                 err = "Cannot have duplicate toppings";
@@ -22,7 +24,13 @@
         }
 
         err = "";
-        availableToppings.push(inputTopping);
+
+        const t = {
+            id: availableToppings.length,
+            name: inputTopping,
+        };
+
+        availableToppings.push(t);
         availableToppings = availableToppings;
     }
 
@@ -30,7 +38,7 @@
         if (selection.length === 0) return;
 
         availableToppings = availableToppings.filter(
-            (x) => !selection.includes(x)
+            (x) => !selection.includes(x.name)
         );
     }
 
@@ -38,15 +46,23 @@
         if (selection.length === 0) return;
         if (inputTopping === undefined || inputTopping === "") return;
 
-        const item = selection[0];
-        for (let i = 0; i < availableToppings.length; i++) {
-            if (item === availableToppings[i]) {
-                console.log(availableToppings[i], inputTopping);
-                availableToppings[i] = inputTopping;
-                return;
-            }
+        const items = availableToppings.filter((x) => x.name === selection[0]);
+        if (items === undefined || items.length === 0) return;
+
+        items[0].name = inputTopping;
+        availableToppings = availableToppings;
+    }
+
+    function init() {
+        for (let i = 0; i < defaultToppingNames.length; i++) {
+            availableToppings.push({
+                id: i,
+                name: defaultToppingNames[i],
+            });
         }
     }
+
+    init();
 </script>
 
 <h2>Toppings</h2>
@@ -57,7 +73,7 @@
 </div>
 
 {#each availableToppings as topping}
-    <Topping value={topping} bind:group={selection} />
+    <Topping value={topping.name} bind:group={selection} />
 {/each}
 
 <div class="buttons">
