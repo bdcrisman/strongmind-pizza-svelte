@@ -3,7 +3,6 @@
     import "./styles.css";
 
     export let availableToppings = ["Marinara Sauce", "Cheese"];
-    export let isReady = false;
 
     let selection = [];
     let inputTopping;
@@ -44,8 +43,6 @@
             }
         }
     }
-
-    isReady = true;
 </script>
 
 <h2>Toppings</h2>
