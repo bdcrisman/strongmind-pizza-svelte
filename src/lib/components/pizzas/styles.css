@@ -1,8 +1,22 @@
+ul {
+    /* position: absolute; */
+}
+
 li {
     text-decoration: none;
     list-style: none;
+    /* float: left; */
+    /* position: relative; */
 }
 
 .error {
     color: red;
+}
+
+.add-pizza-btn {
+    /* position: absolute; */
+}
+
+.pizza-name {
+    font-weight: 800;
 }

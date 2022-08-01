@@ -8,6 +8,7 @@
     let pizzas = [];
     let pizza = undefined;
     let isCreatePizza = false;
+    let isUpdatePizza = false;
 
     let err = "";
 
