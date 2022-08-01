@@ -131,18 +131,12 @@
 <hr />
 
 {#if isCreatePizza}
-    <NewPizza
-        bind:availableToppings
-        bind:pizza
-        on:addPizza={addPizza}
-        bind:err
-    />
+    <NewPizza bind:availableToppings bind:pizza on:addPizza={addPizza} />
 {:else if isUpdatePizza}
     <UpdatePizza
         bind:availableToppings
         bind:updatedPizza
         on:updatePizza={updateSelectedPizza}
-        bind:err
         existingPizza={pizza}
     />
 {/if}
