@@ -10,16 +10,15 @@
         toppings: [],
     };
 
-    export let updated = {
-        name: "",
-        toppings: [],
-    };
-
     let selection = [];
     let err = "";
 
     const dispatch = createEventDispatcher();
 
+    /**
+     * @name addTopping
+     * @description Adds a topping to the new pizza.
+     */
     function addTopping() {
         if (selection.length === 0) return;
 
@@ -34,6 +33,10 @@
         pizza.toppings = pizza.toppings;
     }
 
+    /**
+     * @name removeTopping
+     * @description Removes a topping from the new pizza.
+     */
     function removeTopping() {
         if (selection.length === 0) return;
 
@@ -42,10 +45,10 @@
         pizza.toppings = pizza.toppings.filter((x) => x !== topping);
     }
 
-    function setUpdatedToExisting() {
-        updated = pizza;
-    }
-
+    /**
+     * @name addPizza
+     * @description Dispatch to trigger `addPizza` event to bound object.
+     */
     const addPizza = () => dispatch("addPizza");
 </script>
 
