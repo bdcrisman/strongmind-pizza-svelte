@@ -11,6 +11,10 @@
     let topping = undefined;
     let err = "";
 
+    /**
+     * @name addTopping
+     * @description Add topping to the toppings list.
+     */
     function addTopping() {
         if (inputTopping === undefined || inputTopping === "") return;
 
@@ -35,6 +39,10 @@
         availableToppings = availableToppings;
     }
 
+    /**
+     * @name removeTopping
+     * @description Remove selected topping from the toppings list.
+     */
     function removeTopping() {
         if (selection.length === 0) return;
 
@@ -43,6 +51,10 @@
         );
     }
 
+    /**
+     * @name updateTopping
+     * @description Updates the selected topping.
+     */
     function updateTopping() {
         if (selection.length === 0) return;
         if (inputTopping === undefined || inputTopping === "") return;
@@ -54,6 +66,10 @@
         availableToppings = availableToppings;
     }
 
+    /**
+     * @name init
+     * @description Initializes the component.
+     */
     function init() {
         for (let i = 0; i < defaultToppingNames.length; i++) {
             availableToppings.push({
@@ -63,6 +79,7 @@
         }
     }
 
+    // Runs when first rendered to the DOM.
     onMount(async () => {
         init();
     });

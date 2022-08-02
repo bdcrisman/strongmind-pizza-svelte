@@ -17,6 +17,10 @@
 
     const dispatch = createEventDispatcher();
 
+    /**
+     * @name addTopping
+     * @description Add topping to pizza in update state.
+     */
     function addTopping() {
         if (selection.length === 0) return;
 
@@ -32,6 +36,10 @@
         isDirty = true;
     }
 
+    /**
+     * @name removeTopping
+     * @description Removes topping from pizza in update state.
+     */
     function removeTopping() {
         if (selection.length === 0) return;
 
@@ -44,6 +52,10 @@
         isDirty = true;
     }
 
+    /**
+     * @name updatePizza
+     * @description Updates the pizza.
+     */
     function updatePizza() {
         updatedPizza.id = existingPizza.id;
 
@@ -59,10 +71,15 @@
         dispatch("updatePizza");
     }
 
+    /**
+     * @name init
+     * @description Initializes the component.
+     */
     function init() {
         updatedPizza = existingPizza;
     }
 
+    // Runs when first rendered to the DOM.
     onMount(async () => {
         init();
     });

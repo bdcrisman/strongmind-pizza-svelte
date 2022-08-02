@@ -13,12 +13,20 @@
     let isUpdatePizza = false;
     let err = "";
 
+    /**
+     * @name createNewPizza
+     * @description Displays the create new pizza panel.
+     */
     function createNewPizza() {
         pizza = undefined;
         isUpdatePizza = false;
         isCreatePizza = true;
     }
 
+    /**
+     * @name addPizz
+     * @description Adds a pizza to the list of pizzas.
+     */
     function addPizza() {
         if (!isValidPizza(pizza, false)) return;
 
@@ -29,10 +37,18 @@
         pizza = undefined;
     }
 
+    /**
+     * @name removePizza
+     * @description Removes the selected pizza from the list.
+     */
     function removePizza() {
         pizzas = pizzas.filter((p) => p.name != selection[0]);
     }
 
+    /**
+     * @name updatePizza
+     * @description Enables the update pizza panel.
+     */
     function updatePizza() {
         const result = pizzas.filter((p) => p.name === selection[0]);
         if (result.length === 0) return;
@@ -42,6 +58,10 @@
         isUpdatePizza = true;
     }
 
+    /**
+     * @name updateSelectedPizza
+     * @description Updates the selected pizza, if valid.
+     */
     function updateSelectedPizza() {
         if (!isValidPizza(updatedPizza, true)) return;
 
@@ -49,6 +69,13 @@
         isUpdatePizza = false;
     }
 
+    /**
+     * @name isValidPizza
+     * @description Checks to see if the pizza is valid (e.g. no same names and same toppings).
+     * @param {object} inPizza
+     * * @param {boolean} isUpdate
+     * @returns {boolean} true if valid else false.
+     */
     function isValidPizza(inPizza, isUpdate) {
         err = "";
 
@@ -79,6 +106,12 @@
         return !haveSameToppings;
     }
 
+    /**
+     * @name isPizzaToppingsSame
+     * @description Checks to see if the pizza has the same toppings as any other pizza in the list.
+     * @param {object} inPizza
+     * @returns {boolean} true if same toppings else false.
+     */
     function isPizzaToppingsSame(inPizza) {
         let haveSameToppings = false;
 
