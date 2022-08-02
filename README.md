@@ -29,4 +29,4 @@ As a pizza chef I should be able to create new pizza master pieces
 
 # Link to Application
 
--   [soon!](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+-   [Application](https://strongmind-pizza-project.s3.us-west-1.amazonaws.com/index.html)
