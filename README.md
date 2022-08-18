@@ -27,6 +27,3 @@ As a pizza chef I should be able to create new pizza master pieces
 -   It should allow me to update toppings on an existing pizza
 -   It should not allow me to enter duplicate pizzas
 
-# Link to Application
-
--   [Application](https://strongmind-pizza-project.s3.us-west-1.amazonaws.com/index.html)
